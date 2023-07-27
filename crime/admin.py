@@ -22,22 +22,31 @@ class CrimeAdmin(admin.ModelAdmin):
 
         if request.method == "POST":
             csv_file = request.FILES["csv_upload"]
-            
-            if not csv_file.name.endswith('.csv'):
-                messages.warning(request, 'The wrong file type was uploaded')
-                return HttpResponseRedirect(request.path_info)
-            
+                        
             file_data = csv_file.read().decode("utf-8")
             csv_data = file_data.split("\n")
 
-            for line in csv_data:
-                fields = line.split(",")
-                # created = customer.objects.update_or_create(
-                #     name = fields[0],
-                #     balance = fields[1],
-                #     )
+            row = len(csv_data) - 1
 
-            return HttpResponseRedirect("")
+            for line in range(1, len (csv_data)):                
+                fields = csv_data[line].split(",")
+
+                created = crime.objects.create(
+                    crime_type = fields[0],
+                    year = fields[1],
+                    month = fields[2],
+                    day = fields[3],
+                    hour = fields[4],
+                    minute = fields[5],
+                    block = fields[6],
+                    neighbor = fields[7],
+                    x = fields[8],
+                    y = fields[9]
+                )
+
+                print(f'Progress {line}/{row}:{created[1]}')
+
+            return HttpResponseRedirect('http://127.0.0.1:8000/')
 
         form = CsvImportForm()
         data = {"form": form}
