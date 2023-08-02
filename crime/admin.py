@@ -44,7 +44,7 @@ class CrimeAdmin(admin.ModelAdmin):
                     y = fields[9]
                 )
 
-                print(f'Progress {line}/{row}:{created[1]}')
+                print(f'Progress {line}/{row}')
 
             return HttpResponseRedirect('http://127.0.0.1:8000/')
 
