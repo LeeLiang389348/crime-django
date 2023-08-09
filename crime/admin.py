@@ -28,12 +28,14 @@ class CrimeAdmin(admin.ModelAdmin):
 
             row = len(csv_data) - 1
 
+            list_of_crimes = []
+
             for line in range(1, len (csv_data)):                
                 fields = csv_data[line].split(",")
 
-                created = crime.objects.create(
+                c = crime(
                     crime_type = fields[0],
-                    year = fields[1],
+                    year =fields[1],
                     month = fields[2],
                     day = fields[3],
                     hour = fields[4],
@@ -44,8 +46,12 @@ class CrimeAdmin(admin.ModelAdmin):
                     y = fields[9]
                 )
 
-                print(f'Progress {line}/{row}')
+                list_of_crimes.append(c)
 
+                print(f'Reading from csv file: {line}/{row}')
+
+            print("Start bulk creation")
+            crime.objects.bulk_create(list_of_crimes, batch_size=20000)
             return HttpResponseRedirect('http://127.0.0.1:8000/')
 
         form = CsvImportForm()
