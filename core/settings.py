@@ -43,7 +43,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR/'templates/crime'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +64,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Your email provider's SMTP server
+EMAIL_PORT = 587  # Port number for SMTP
+EMAIL_USE_TLS = True  # Use TLS encryption for the connection
+EMAIL_HOST_USER = 'info4330finalprojecttestemail@gmail.com'  # Your email address
+EMAIL_HOST_PASSWORD = 'lzdrogihbztqbqyi'  # Your email password or app password if using 2-step verification
+
+CONTACT_EMAIL = 'Info4330FinalProjectTestEmail@gmail.com'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
